@@ -1,0 +1,43 @@
+:root {
+  --font-mono: 'Fira Code', 'Cascadia Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --font-sans: 'Fira Code', 'Cascadia Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --text-primary: #e5eefb;
+  --text-secondary: #b8c3d9;
+  --text-muted: #607b96;
+  --line: rgba(96, 123, 150, 0.28);
+  --accent-blue: #4d5bce;
+  --accent-orange: #fea55f;
+  --accent-green: #43d9ad;
+
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: #0b1222;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #0b1222;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100svh;
+  margin: 0;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+#root {
+  min-height: 100svh;
+}
