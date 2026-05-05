@@ -11,6 +11,13 @@ const navItems = ['_hello', '_about-me', '_projects', '_contact-me'] as const
 
 type NavItem = (typeof navItems)[number]
 
+type AboutFile = 'bio' | 'resume'
+
+const aboutFileLabels: Record<AboutFile, string> = {
+  bio: 'bio.md',
+  resume: 'resume.md',
+}
+
 const skills = ['C#', '.NET', 'Azure', 'Python', 'React']
 
 const codeSnippets = [
@@ -38,6 +45,42 @@ const aboutLines = [
   ' *',
   ' * Education: B.S. Computer Science,',
   ' * University of Michigan-Dearborn.',
+  ' */',
+]
+
+const resumeLines = [
+  '/**',
+  ' * Resume',
+  ' * John Macfadyen',
+  ' * Software Developer',
+  ' *',
+  ' * Experience',
+  ' * Tegrit — Software Engineer',
+  ' * 12/2021 - Present | Livonia, MI',
+  ' * - Built EDRO retirement workflows with C# and .NET Core,',
+  ' *   improving processing time and user experience.',
+  ' * - Developed batch account tooling for CSV uploads,',
+  ' *   increasing productivity and reducing manual entry.',
+  ' * - Migrated file storage to Azure Blob Storage and',
+  ' *   supported Azure Functions and Azure DevOps CI/CD.',
+  ' *',
+  ' * Computer Enterprises Inc — Software Engineer',
+  ' * 10/2020 - 12/2021 | Pittsburgh, PA',
+  ' * - Designed RESTful APIs with C#, .NET, SQL, and MySQL.',
+  ' * - Improved application performance and scalability',
+  ' *   across financial and inventory management systems.',
+  ' *',
+  ' * Shoptelligence — Software Engineer',
+  ' * 08/2019 - 10/2020 | Ann Arbor, MI',
+  ' * - Built Python and FastAPI services for high-volume APIs.',
+  ' * - Improved integrations, reliability, and query performance.',
+  ' *',
+  ' * Education',
+  ' * B.S. Computer Science, University of Michigan-Dearborn',
+  ' *',
+  ' * Skills',
+  ' * C#, .NET, Azure, Python, FastAPI, React, Angular, SQL,',
+  ' * REST Services, Entity Framework, CI/CD, Agile SDLC',
   ' */',
 ]
 
@@ -137,6 +180,29 @@ function Home() {
 }
 
 function AboutMe() {
+  const [activeAboutFile, setActiveAboutFile] = useState<AboutFile | null>('bio')
+  const [openAboutTabs, setOpenAboutTabs] = useState<AboutFile[]>(['bio'])
+  const currentLines = activeAboutFile === 'resume' ? resumeLines : aboutLines
+
+  const openAboutFile = (file: AboutFile) => {
+    setOpenAboutTabs((currentTabs) =>
+      currentTabs.includes(file) ? currentTabs : [...currentTabs, file],
+    )
+    setActiveAboutFile(file)
+  }
+
+  const closeAboutTab = (file: AboutFile) => {
+    setOpenAboutTabs((currentTabs) => {
+      const nextTabs = currentTabs.filter((tab) => tab !== file)
+
+      if (activeAboutFile === file) {
+        setActiveAboutFile(nextTabs.at(-1) ?? null)
+      }
+
+      return nextTabs
+    })
+  }
+
   return (
     <section className="about-layout" aria-labelledby="about-title">
       <aside className="about-sidebar" aria-label="About me file explorer">
@@ -147,22 +213,25 @@ function AboutMe() {
           </button>
           <ul className="file-tree">
             <li>
-              <span className="chevron muted">›</span>
-              <span className="folder-dot bio" />
-              bio
+              <button
+                className={`file-button ${activeAboutFile === 'bio' ? 'active' : ''}`}
+                type="button"
+                onClick={() => openAboutFile('bio')}
+              >
+                <span className="folder-dot bio" />
+                {aboutFileLabels.bio}
+              </button>
             </li>
             <li>
-              <span className="chevron muted">›</span>
-              <span className="folder-dot interests" />
-              interests
+              <button
+                className={`file-button ${activeAboutFile === 'resume' ? 'active' : ''}`}
+                type="button"
+                onClick={() => openAboutFile('resume')}
+              >
+                <span className="folder-dot resume" />
+                {aboutFileLabels.resume}
+              </button>
             </li>
-            <li className="active">
-              <span className="chevron">▾</span>
-              <span className="folder-dot education" />
-              education
-            </li>
-            <li className="nested">high-school</li>
-            <li className="nested">university</li>
           </ul>
         </div>
 
@@ -180,18 +249,51 @@ function AboutMe() {
 
       <div className="about-editor">
         <div className="about-tabbar">
-          <span id="about-title">about-me</span>
-          <span aria-hidden="true">×</span>
+          {openAboutTabs.map((tab) => (
+            <button
+              key={tab}
+              className={`about-tab ${activeAboutFile === tab ? 'active' : ''}`}
+              type="button"
+              onClick={() => setActiveAboutFile(tab)}
+            >
+              <span id={activeAboutFile === tab ? 'about-title' : undefined}>{aboutFileLabels[tab]}</span>
+              <span
+                className="tab-close"
+                role="button"
+                tabIndex={0}
+                aria-label={`Close ${tab} tab`}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  closeAboutTab(tab)
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    closeAboutTab(tab)
+                  }
+                }}
+              >
+                ×
+              </span>
+            </button>
+          ))}
         </div>
 
-        <div className="about-code-pane" aria-label="About me text editor">
-          <ol className="line-numbers" aria-hidden="true">
-            {aboutLines.map((_, index) => (
-              <li key={`line-${index + 1}`}>{index + 1}</li>
-            ))}
-          </ol>
-          <pre className="about-code"><code>{aboutLines.join('\n')}</code></pre>
-        </div>
+        {activeAboutFile ? (
+          <div className="about-code-pane" aria-label="About me text editor">
+            <ol className="line-numbers" aria-hidden="true">
+              {currentLines.map((_, index) => (
+                <li key={`line-${index + 1}`}>{index + 1}</li>
+              ))}
+            </ol>
+            <pre className="about-code"><code>{currentLines.join('\n')}</code></pre>
+          </div>
+        ) : (
+          <div className="empty-editor" aria-labelledby="about-title">
+            <p id="about-title">Please select a &quot;file&quot;.</p>
+          </div>
+        )}
       </div>
     </section>
   )

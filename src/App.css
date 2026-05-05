@@ -333,27 +333,28 @@ h1 {
 .contact-tree li {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
   color: var(--text-secondary);
   font-size: 0.96rem;
 }
 
-.file-tree li.active {
+.file-button {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.96rem;
+  text-align: left;
+}
+
+.file-button:hover,
+.file-button.active {
   color: var(--text-primary);
-}
-
-.file-tree li.nested {
-  position: relative;
-  padding-left: 3.15rem;
-  color: var(--text-muted);
-}
-
-.file-tree li.nested::before {
-  content: '▣';
-  position: absolute;
-  left: 1.9rem;
-  color: var(--text-muted);
-  font-size: 0.7rem;
 }
 
 .folder-dot {
@@ -374,6 +375,10 @@ h1 {
   background: #4d5bce;
 }
 
+.folder-dot.resume {
+  background: #fea55f;
+}
+
 .contacts-section .contact-tree {
   padding-top: 1rem;
 }
@@ -390,17 +395,51 @@ h1 {
 }
 
 .about-tabbar {
-  display: inline-flex;
-  width: fit-content;
-  min-width: 240px;
+  display: flex;
+  min-width: 0;
   min-height: 48px;
   align-items: center;
-  justify-content: space-between;
-  gap: 3rem;
-  padding-inline: 1.5rem;
-  border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   color: var(--text-muted);
+  overflow-x: auto;
+}
+
+.about-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  min-width: 170px;
+  min-height: 48px;
+  padding-inline: 1.5rem;
+  border: 0;
+  border-right: 1px solid var(--line);
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+
+.about-tab:hover,
+.about-tab.active {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.tab-close {
+  display: inline-grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  place-items: center;
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+.tab-close:hover,
+.tab-close:focus-visible {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
 }
 
 .about-code-pane {
@@ -435,6 +474,25 @@ h1 {
 
 .about-code code {
   font-family: inherit;
+}
+
+.empty-editor {
+  display: grid;
+  min-height: 100%;
+  place-items: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  text-align: center;
+}
+
+.empty-editor p {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  background: rgba(1, 8, 24, 0.18);
 }
 
 .editor-footer {
