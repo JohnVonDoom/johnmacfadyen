@@ -1,0 +1,191 @@
+.portfolio-home {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 3.75rem);
+  background:
+    radial-gradient(circle at 44% 54%, rgba(15, 183, 177, 0.18), transparent 18rem),
+    radial-gradient(circle at 66% 70%, rgba(78, 98, 255, 0.24), transparent 22rem),
+    linear-gradient(135deg, #0b1222 0%, #101935 48%, #151d3f 100%);
+  color: var(--text-primary);
+}
+
+.portfolio-home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+.ambient {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(18px);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.ambient-one {
+  right: 24%;
+  top: 27%;
+  width: 15rem;
+  height: 15rem;
+  background: rgba(67, 217, 173, 0.16);
+}
+
+.ambient-two {
+  right: 16%;
+  bottom: 22%;
+  width: 22rem;
+  height: 22rem;
+  background: rgba(77, 91, 206, 0.2);
+}
+
+.editor-window {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: min(760px, calc(100svh - clamp(2rem, 6vw, 7.5rem)));
+  max-width: 1320px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(15, 24, 46, 0.78);
+  box-shadow: 0 30px 90px rgba(1, 8, 24, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(18px);
+}
+
+.about-mode {
+  min-height: min(820px, calc(100svh - clamp(2rem, 6vw, 7.5rem)));
+}
+
+.editor-topbar,
+.editor-footer {
+  display: flex;
+  min-height: 45px;
+  border-color: var(--line);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.editor-topbar {
+  border-bottom: 1px solid var(--line);
+}
+
+.brand,
+.nav-tab,
+.editor-footer a,
+.editor-footer span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 45px;
+  padding-inline: 1.25rem;
+  border-right: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand,
+.nav-tab {
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+
+.brand {
+  min-width: 210px;
+  letter-spacing: 0.02em;
+}
+
+.nav-tabs {
+  display: flex;
+  width: 100%;
+}
+
+.nav-tab {
+  position: relative;
+  min-width: 126px;
+  justify-content: center;
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.nav-tab:hover,
+.nav-tab.active {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-tab.active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  background: var(--accent-orange);
+}
+
+.editor-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+}
+
+.editor-footer span {
+  color: var(--text-muted);
+}
+
+.editor-footer a {
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.editor-footer a:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+@media (max-width: 760px) {
+  .portfolio-home {
+    padding: 0.85rem;
+  }
+
+  .editor-window {
+    min-height: calc(100svh - 1.7rem);
+  }
+
+  .editor-topbar {
+    display: block;
+  }
+
+  .brand {
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-tabs {
+    overflow-x: auto;
+  }
+
+  .nav-tab {
+    min-width: max-content;
+  }
+
+  .editor-footer {
+    overflow-x: auto;
+  }
+
+  .editor-footer span,
+  .editor-footer a {
+    min-width: max-content;
+  }
+}
