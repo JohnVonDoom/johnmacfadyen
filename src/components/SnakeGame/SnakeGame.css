@@ -277,35 +277,6 @@
 
 @media (max-width: 760px) {
   .snake-showcase {
-    min-height: auto;
-    margin-block: 0;
-  }
-
-  .snake-console {
-    grid-template-columns: 1fr;
-    width: min(100%, 430px);
-  }
-
-  .snake-controls-panel {
-    grid-template-rows: auto auto auto;
-  }
-
-  .control-card {
-    display: grid;
-    grid-template-columns: 1fr minmax(130px, 0.8fr);
-    gap: 0.8rem;
-    align-items: center;
-  }
-
-  .arrow-pad {
-    margin-top: 0;
-  }
-
-  .snake-board {
-    width: min(100%, 230px);
-  }
-
-  .snake-status {
-    min-height: auto;
+    display: none;
   }
 }
